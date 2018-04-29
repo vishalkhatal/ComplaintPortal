@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2026
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CitizienComplaintPortal.Model", "CitizienComplaintPortal.Model\CitizienComplaintPortal.Model.csproj", "{C3CBFC3F-3227-4DF2-B63F-5A27F9904A53}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CitizenComplaintPortal.Api", "CitizenComplaintPortal.Api\CitizenComplaintPortal.Api.csproj", "{A462856D-D825-49CF-AEBA-5B544FDFAA83}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CitizenComplaintPortal.Web", "CitizenComplaintPortal.Web\CitizenComplaintPortal.Web.csproj", "{6B03EF02-0F10-4DCA-8639-562E3413B878}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CitizenComplaintportal.Test", "CitizenComplaintportal.Test\CitizenComplaintportal.Test.csproj", "{BDE7A9EE-5CCD-4BA1-A887-E115FE14AE1E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C3CBFC3F-3227-4DF2-B63F-5A27F9904A53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3CBFC3F-3227-4DF2-B63F-5A27F9904A53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3CBFC3F-3227-4DF2-B63F-5A27F9904A53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3CBFC3F-3227-4DF2-B63F-5A27F9904A53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A462856D-D825-49CF-AEBA-5B544FDFAA83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A462856D-D825-49CF-AEBA-5B544FDFAA83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A462856D-D825-49CF-AEBA-5B544FDFAA83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A462856D-D825-49CF-AEBA-5B544FDFAA83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B03EF02-0F10-4DCA-8639-562E3413B878}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B03EF02-0F10-4DCA-8639-562E3413B878}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B03EF02-0F10-4DCA-8639-562E3413B878}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B03EF02-0F10-4DCA-8639-562E3413B878}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDE7A9EE-5CCD-4BA1-A887-E115FE14AE1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDE7A9EE-5CCD-4BA1-A887-E115FE14AE1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDE7A9EE-5CCD-4BA1-A887-E115FE14AE1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDE7A9EE-5CCD-4BA1-A887-E115FE14AE1E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1E7988A9-44BC-4172-9293-A531B3B0D8F0}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 5
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://zikh.visualstudio.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = CitizenComplaintPortal.Api\\CitizenComplaintPortal.Api.csproj
+		SccProjectName1 = CitizenComplaintPortal.Api
+		SccLocalPath1 = CitizenComplaintPortal.Api
+		SccProjectUniqueName2 = CitizienComplaintPortal.Model\\CitizienComplaintPortal.Model.csproj
+		SccProjectName2 = CitizienComplaintPortal.Model
+		SccLocalPath2 = CitizienComplaintPortal.Model
+		SccProjectUniqueName3 = CitizenComplaintPortal.Web\\CitizenComplaintPortal.Web.csproj
+		SccProjectName3 = CitizenComplaintPortal.Web
+		SccLocalPath3 = CitizenComplaintPortal.Web
+		SccProjectUniqueName4 = CitizenComplaintportal.Test\\CitizenComplaintportal.Test.csproj
+		SccProjectName4 = CitizenComplaintportal.Test
+		SccLocalPath4 = CitizenComplaintportal.Test
+	EndGlobalSection
+EndGlobal

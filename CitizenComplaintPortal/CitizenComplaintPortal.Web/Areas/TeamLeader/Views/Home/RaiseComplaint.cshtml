@@ -1,0 +1,169 @@
+﻿@model CitizensComplaintPortal.Models.Complaint
+
+@{
+    Layout = "~/Areas/TeamLeader/Views/Shared/_Layout.cshtml";
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>CreateComplaint</title>
+</head>
+<body>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <i><h4>Please enter your complaint here: </h4></i>
+            <hr />
+            @if (@TempData["SuccessStatus"] != null)
+            {
+                <div class="alert alert-success">
+                    <label>
+                        @TempData["SuccessStatus"]
+                    </label>
+                </div>
+            }
+
+            <div style="align-content:center;">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.EmailAddress, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.EmailAddress, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.EmailAddress, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.MobileNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.MobileNo, new { htmlAttributes = new { @class = "form-control", @type = "number", @maxlength = "10" } })
+                        @Html.ValidationMessageFor(model => model.MobileNo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.complaintType, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.complaintType, new List<SelectListItem> {
+
+                                               new SelectListItem{ Value = "0" , Text = "Water"  },
+                                               new SelectListItem{ Value = "1", Text = "Electricity" },
+                                               new SelectListItem{ Value = "2", Text = "Road" },
+                                               new SelectListItem{ Value = "3", Text = "Cleaning" },
+                                                new SelectListItem{ Value = "4", Text = "others" }
+
+
+                                                 }, new { htmlAttributes = new { @class = "", @style = "width: 400px;" } })
+                        @Html.ValidationMessageFor(model => model.complaintType, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ComplaintDescription, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ComplaintDescription, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ComplaintDescription, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PinCode, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.PinCode, new List<SelectListItem> {
+
+                                               new SelectListItem{ Value = "1" , Text = "500615"  },
+                                               new SelectListItem{ Value = "2", Text = "500415" }
+                                                 }, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.PinCode, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div>
+                    <input type="button" value="Locate Address" class="btn btn-success" style="margin-left: 17%;"
+                           onclick="locateAddress(this);" />
+
+                </div>
+                <div>
+                    <div class="col-md-5">
+                        <div class="container">
+                            <div class="row-fluid">
+                                <div class="span8">
+                                    <iframe id="myframe" width="100%" height="350" style="
+    margin-top: 3%;
+    margin-left: 37%;margin-bottom:4%;
+" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.co.uk/maps?f=q&source=s_q&hl=en&geocode=&q=Gachibowli&output=embed"></iframe>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Submit" class="btn btn-success" />
+                        <input type="button" value="Cancel" class="btn btn-danger" onclick="location.href='@Url.Action("index", "Home")'" />
+
+                    </div>
+                </div>
+
+                <div>
+                    <label>
+                        @TempData["SuccessStatus"]
+                    </label>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+
+</body>
+</html>
+
+<script>
+    function locateAddress() {
+        var address = "https://maps.google.co.uk/maps?f=q&source=s_q&hl=en&geocode=&q=" + $('#Address').val() + "&output=embed";
+        $('#myframe').attr('src', address);
+
+    }
+</script>

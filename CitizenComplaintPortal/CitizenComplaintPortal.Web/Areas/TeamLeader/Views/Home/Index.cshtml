@@ -1,0 +1,238 @@
+﻿@model IEnumerable<CitizensComplaintPortal.Models.Complaint>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/TeamLeader/Views/Shared/_Layout.cshtml";
+}
+
+<link href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+<h2>Team Lead Portal</h2>
+<div>
+        <label>
+            @ViewBag.SuccessMessage
+        </label>
+</div>
+@*<p>
+        <input type="submit" value="Submit new complaint" class="btn btn-success" style="
+        float: right;
+        margin-bottom: 28px;
+    " onclick="location.href='@Url.Action("RaiseComplaint", "Home")'">
+    </p>*@
+<table class="table" id="TeamLeadView">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmailAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MobileNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ComplaintDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.complaintStatus)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            
+            @*<th>
+                    @Html.DisplayNameFor(model => model.UserId)
+                </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HelperName)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            @Html.HiddenFor(modelItem => item.ComplaintId)
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmailAddress)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MobileNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ComplaintDescription)
+                </td>
+                <td>
+                    <div class="col-md-10">
+                        @Html.EnumDropDownListFor(modelItem => item.complaintStatus,   new { @class = "ddlComplaintStatus" + item.ComplaintId })
+
+                        @Html.ValidationMessageFor(modelItem => item.complaintStatus, "", new { @class = "text-danger" })
+                    </div>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+               
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.UserId)
+                    </td>*@
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                </td>
+
+                <td>
+                    <div class="col-md-10">
+                        @Html.EnumDropDownListFor(modelItem => item.HelperName, "-- Select --", new { @class = "ddlHelperName" + item.ComplaintId })
+
+                        @Html.ValidationMessageFor(modelItem => item.HelperName, "", new { @class = "text-danger" })
+                    </div>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+<fieldset>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+
+                <div class="modal fade" tabindex="-1" id="AssignModal"
+                     data-keyboard="false" data-backdrop="static">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">
+                                    ×
+
+                                </button>
+                                <h4 class="modal-title">Assign Helper</h4>
+
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="form-group">
+                                        <div class="col-md-10">
+                                            @Html.ListBox("Assign Helper", new List<SelectListItem> {
+
+                                                                                                            new SelectListItem{ Value = "1" , Text = "Mehmet"  },
+                                                                                                            new SelectListItem{ Value = "2", Text = "ziaullah" },
+                                                                                                            new SelectListItem{ Value = "3", Text = "Pallavi" },
+                                                                                                            new SelectListItem{ Value = "4", Text = "Purvesh" },
+                                                                                                            new SelectListItem{ Value = "5", Text = "Vishal" },
+                                                                                                            new SelectListItem{ Value = "6", Text = "Avinash" },
+                                                                                                            new SelectListItem{ Value = "7", Text = "Venkata" }
+
+                                                                                                                }, new { @class = "", @style = "width:500px;" })
+
+                                        </div>
+
+                                    </div>
+                                </form>
+
+                            </div>
+                            <div class="modal-footer">
+
+                                <button type="submit" class="btn btn-primary button button4" id="btnAssignToHelper" onclick="location.href='@Url.Action("AssignHelper", "Home")'">Assign</button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</fieldset>
+
+
+<script src="~/Scripts/jquery-1.10.2.js" type="text/javascript"></script>
+<script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+
+<script src="~/Scripts/toastr.js"></script>
+
+<script src="~/Scripts/toastr.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#TeamLeadView').DataTable();
+
+        $('[class^="ddlComplaintStatus"]').on('change', function () {
+            var className = $(this).attr('class');
+            var complaintID = className.substring(18, className.length);
+            var element = this;
+            var RootUrl = '@Url.Content("~/")';
+            $.ajax({
+                url: RootUrl + "TeamLeader/Home/AssignComplaintStatus",
+                type: "POST",
+                data: JSON.stringify({ 'Options': complaintID + '#' + $(this).val() }),
+                dataType: "json",
+                traditional: true,
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    if (data == "1") {
+                        toastr.success('You have successfully changed complaint status')
+                    } else {
+                        toastr.error("System error please contact system administrator.");
+                    }
+                },
+                error: function () {
+                    //alert("An error has occured!!!");
+                }
+            });
+        });
+
+        $('[class^="ddlHelperName"]').on('change', function () {
+            var className = $(this).attr('class');
+            var complaintID = className.substring(13, className.length);
+            var element = this;
+            var RootUrl = '@Url.Content("~/")';
+            $.ajax({
+                url: RootUrl + "TeamLeader/Home/AssignComplaintToHelper",
+                type: "POST",
+                data: JSON.stringify({ 'Options': complaintID + '#' + $(this).val() }),
+                dataType: "json",
+                traditional: true,
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    if (data == "1") {
+                        toastr.success('You have successfully assigned complaint to helper')
+                    } else {
+                        toastr.error("System error please contact system administrator.");
+                    }
+                },
+                error: function () {
+                    //alert("An error has occured!!!");
+                }
+            });
+        });
+    });
+
+    $('#btnAssignHelper').click(function () {
+        $("#AssignModal").modal('show');
+    });
+
+</script>

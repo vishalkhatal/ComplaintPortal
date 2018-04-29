@@ -1,0 +1,136 @@
+﻿
+@model IEnumerable<CitizensComplaintPortal.Models.Complaint>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Helper/Views/Shared/_Layout.cshtml";
+}
+
+<link href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+<h2>Issue(s) List</h2>
+<div>
+    <label>
+        @TempData["SuccessStatus"]
+    </label>
+</div>
+
+<table class="table" id="HelperView">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmailAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MobileNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ComplaintDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.complaintStatus)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+
+            @*<th>
+                    @Html.DisplayNameFor(model => model.UserId)
+                </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            @Html.HiddenFor(modelItem => item.ComplaintId)
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmailAddress)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MobileNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ComplaintDescription)
+                </td>
+                <td>
+                    <div class="col-md-10">
+                        @Html.EnumDropDownListFor(modelItem => item.complaintStatus, new { @class = "ddlComplaintStatus" + item.ComplaintId })
+
+                        @Html.ValidationMessageFor(modelItem => item.complaintStatus, "", new { @class = "text-danger" })
+                    </div>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.UserId)
+                    </td>*@
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                </td>
+
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+<script src="~/Scripts/jquery-1.10.2.js" type="text/javascript"></script>
+<script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+
+<script src="~/Scripts/toastr.js"></script>
+
+<script src="~/Scripts/toastr.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#HelperView').DataTable();
+
+        var RootUrl = '@Url.Content("~/")';
+
+        $('[class^="ddlComplaintStatus"]').on('change', function () {
+            var className = $(this).attr('class');
+            var complaintID = className.substring(18, className.length);
+            var element = this;
+            $.ajax({
+                url: RootUrl +'Helper/Home/UpdateComplaintStatus',
+                type: "POST",
+                data: JSON.stringify({ 'Options': complaintID + '#' + $(this).val() }),
+                dataType: "json",
+                traditional: true,
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    if (data == "1") {
+                        toastr.success('You have successfully changed complaint status')
+                    } else {
+                        toastr.error("System error please contact system administrator.");
+                    }
+                },
+                error: function () {
+                    //alert("An error has occured!!!");
+                }
+            });
+        });
+    });
+
+
+
+</script>
